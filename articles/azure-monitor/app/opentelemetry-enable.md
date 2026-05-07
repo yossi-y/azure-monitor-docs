@@ -2,7 +2,7 @@
 title: Enable OpenTelemetry in Application Insights
 description: Learn how to enable OpenTelemetry (OTel) data collection in Application Insights for .NET, Java, Node.js, and Python applications using the Azure Monitor OpenTelemetry Distro.
 ms.topic: how-to
-ms.date: 09/26/2025
+ms.date: 04/08/2026
 ms.devlang: csharp
 # ms.devlang: csharp, java, javascript, typescript, python
 ms.custom: devx-track-dotnet, devx-track-extended-java, devx-track-python
@@ -52,7 +52,7 @@ Follow the steps in this section to instrument your application with OpenTelemet
 > * [ASP.NET Core Application](/aspnet/core/introduction-to-aspnet-core) using an officially supported version of [.NET](https://dotnet.microsoft.com/download/dotnet)
 
 > [!Tip]
-> If you're migrating from the [Application Insights Classic API](/previous-versions/azure/azure-monitor/app/classic-api), see our [migration documentation](./opentelemetry-dotnet-migrate.md).
+> If you're migrating from older Application Insights SDKs, see our [migration documentation](./migrate-to-opentelemetry.md).
 
 #### [.NET](#tab/net)
 
@@ -60,7 +60,7 @@ Follow the steps in this section to instrument your application with OpenTelemet
 > * Application using a [supported version](https://dotnet.microsoft.com/platform/support/policy) of [.NET](https://dotnet.microsoft.com/download/dotnet) or [.NET Framework](https://dotnet.microsoft.com/download/dotnet-framework) 4.6.2 and later.
 
 > [!Tip]
-> If you're migrating from the [Application Insights Classic API](/previous-versions/azure/azure-monitor/app/classic-api), see our [migration documentation](./opentelemetry-dotnet-migrate.md).
+> If you're migrating from older Application Insights SDKs, see our [migration documentation](./migrate-to-opentelemetry.md).
 
 #### [Java](#tab/java)
 
@@ -75,7 +75,7 @@ Follow the steps in this section to instrument your application with OpenTelemet
 #### [Node.js](#tab/nodejs)
 
 > [!div class="checklist"]
-> * Application using an officially [supported version](https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/monitor/monitor-opentelemetry-exporter#currently-supported-environments) of Node.js runtime:<br>• [OpenTelemetry supported runtimes](https://github.com/open-telemetry/opentelemetry-js#supported-runtimes)<br>• [Azure Monitor OpenTelemetry Exporter supported runtimes](https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/monitor/monitor-opentelemetry-exporter#currently-supported-environments)
+> * Application using an officially [supported version](https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/monitor/monitor-opentelemetry-exporter#currently-supported-environments) of Node.js runtime:<br>â€¢ [OpenTelemetry supported runtimes](https://github.com/open-telemetry/opentelemetry-js#supported-runtimes)<br>â€¢ [Azure Monitor OpenTelemetry Exporter supported runtimes](https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/monitor/monitor-opentelemetry-exporter#currently-supported-environments)
 
 > [!NOTE]
 > If you don't rely on any properties listed in the [not-supported table](https://github.com/microsoft/ApplicationInsights-node.js/blob/beta/README.md#ApplicationInsights-Shim-Unsupported-Properties), the *ApplicationInsights shim* is your easiest path forward once out of beta.
@@ -83,7 +83,7 @@ Follow the steps in this section to instrument your application with OpenTelemet
 > If you rely on any of those properties, proceed with the Azure Monitor OpenTelemetry Distro.
 
 > [!Tip]
-> If you're migrating from the [Application Insights Classic API](/previous-versions/azure/azure-monitor/app/classic-api), see our [migration documentation](./opentelemetry-nodejs-migrate.md).
+> If you're migrating from older Application Insights SDKs, see our [migration documentation](./migrate-to-opentelemetry.md).
 
 #### [Python](#tab/python)
 
@@ -91,7 +91,7 @@ Follow the steps in this section to instrument your application with OpenTelemet
 > * Python Application using Python 3.8+
 
 > [!Tip]
-> If you're migrating from OpenCensus, see our [migration documentation](./opentelemetry-python-opencensus-migrate.md).
+> If you're migrating from OpenCensus, see our [migration documentation](./migrate-to-opentelemetry.md).
 
 ---
 
@@ -102,7 +102,7 @@ Follow the steps in this section to instrument your application with OpenTelemet
 Install the latest `Azure.Monitor.OpenTelemetry.AspNetCore` [NuGet package](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.AspNetCore):
 
 ```dotnetcli
-dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore 
+dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore
 ```
 
 #### [.NET](#tab/net)
@@ -110,12 +110,12 @@ dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore
 Install the latest `Azure.Monitor.OpenTelemetry.Exporter` [NuGet package](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter):
 
 ```dotnetcli
-dotnet add package Azure.Monitor.OpenTelemetry.Exporter 
+dotnet add package Azure.Monitor.OpenTelemetry.Exporter
 ```
 
 #### [Java](#tab/java)
 
-Download the latest [applicationinsights-agent-3.7.4.jar](https://github.com/microsoft/ApplicationInsights-Java/releases/download/3.7.4/applicationinsights-agent-3.7.4.jar) file.
+Download the latest [applicationinsights-agent-3.7.8.jar](https://github.com/microsoft/ApplicationInsights-Java/releases/download/3.7.8/applicationinsights-agent-3.7.8.jar) file.
 
 > [!WARNING]
 >
@@ -230,7 +230,7 @@ var loggerFactory = LoggerFactory.Create(builder =>
 
 Autoinstrumentation is enabled through configuration changes. *No code changes are required.*
 
-Point the Java virtual machine (JVM) to the jar file by adding `-javaagent:"path/to/applicationinsights-agent-3.7.5.jar"` to your application's JVM args.
+Point the Java virtual machine (JVM) to the jar file by adding `-javaagent:"path/to/applicationinsights-agent-3.7.8.jar"` to your application's JVM args.
 
 > [!NOTE]
 > Sampling is enabled by default at a rate of five requests per second, aiding in cost management. Telemetry data could be missing in scenarios exceeding this rate. For more information on modifying sampling configuration, see [sampling overrides](./java-standalone-sampling-overrides.md).
@@ -264,7 +264,7 @@ import logging
 # `azure.monitor.opentelemetry` package.
 from azure.monitor.opentelemetry import configure_azure_monitor
 
-# Configure OpenTelemetry to use Azure Monitor with the 
+# Configure OpenTelemetry to use Azure Monitor with the
 # APPLICATIONINSIGHTS_CONNECTION_STRING environment variable.
 configure_azure_monitor(
     logger_name="<your_logger_namespace>",  # Set the namespace for the logger in which you would like to collect telemetry for if you are collecting logging telemetry. This is imperative so you do not collect logging telemetry from the SDK itself.
@@ -296,31 +296,31 @@ To paste your connection string, select from the following options:
 
 > [!IMPORTANT]
 > We recommend setting the connection string through code only in local development and test environments.
-> 
+>
 > For production, use an environment variable or configuration file (Java only).
 
 * **Set via environment variable** - *recommended*
 
     Replace `<Your connection string>` in the following command with your connection string.
-    
+
     ```console
     APPLICATIONINSIGHTS_CONNECTION_STRING=<Your connection string>
     ```
 
 * **Set via configuration file** - *Java only*
-    
-    Create a configuration file named `applicationinsights.json`, and place it in the same directory as `applicationinsights-agent-3.7.5.jar` with the following content:
-    
+
+    Create a configuration file named `applicationinsights.json`, and place it in the same directory as `applicationinsights-agent-3.7.8.jar` with the following content:
+
     ```json
     {
       "connectionString": "<Your connection string>"
     }
     ```
-      
+
     Replace `<Your connection string>` in the preceding JSON with *your* unique connection string.
 
 * **Set via code** - *ASP.NET Core, Node.js, and Python only*
-  
+
     See [connection string configuration](opentelemetry-configuration.md#connection-string) for an example of setting connection string via code.
 
 > [!NOTE]
